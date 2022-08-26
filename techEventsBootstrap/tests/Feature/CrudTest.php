@@ -41,5 +41,21 @@ class CrudTest extends TestCase
         ]);
         $this->assertCount(1, Event::all());
     }
+    public function test_a_event_can_be_updated(){
+        $this->withExceptionHandling();
 
+        $event=Event::factory()->create();
+        $this->assertCount(1,Event::all());
+        $response= $this->patch(route('updateEvent', $event->id), ['name' => 'newName']);
+        $this->assertEquals('newName', Event::first()->name);
+      }
+      public function test_Event_Appear_in_showEvent()
+    {
+        $this->withExceptionHandling();
+        $event = Event::factory()->create();
+        $this->assertCount(1,Event::all());
+        $response= $this->get(route('showEvent',$event->id));
+        $response->assertSee($event->img);
+
+    }
 }

@@ -24,11 +24,13 @@
     <a href="{{ route('createEvent') }}">
         <p>Create a new event</p>
     </a>
- </div>
-        <div class="container">
+</div>
+<div class="row row-cols-1 row-cols-md-4 g-2">
 
-            @foreach ($events as $event)
-            <div class=" card" style="width: 18rem;">
+    @foreach ($events as $event)
+    <div class="col">
+        <div class="card" style="width: 18rem;">
+            <a href="{{ route('showEvent', $event->id) }}">ver
                 <img src="{{ $event->img }}" class=" card-img-top" alt="...">
                 <div class="card-body">
 
@@ -36,16 +38,20 @@
                     <p class=" card-text">{{ $event->description }}</p>
                     <p class="card-text">{{ $event->places }}</p>
                 </div>
-                <form action="{{ route('delete', ['id'=>$event->id]) }}" method="post">
-                    @method ('delete')
-                    @csrf
-                    <button type="submit" name="delete" class="btn btn-primary"
-                        onclick="return confirm('Estas seguro que quieres borrar? {{$event->name}}  {{$event->id}}')">
-                        <img
-                            src="htps://www.ordenencasa.shop/wp-content/uploads/2020/05/papelera-redonda-en-madera-de-bambu.jpg" />
-                    </button>
-                </form>
-            </div>
-            @endforeach
+                </a>
+            <form action="{{ route('delete', ['id'=>$event->id]) }}" method="post">
+                @method ('delete')
+                @csrf
+                <button type="submit" name="delete" class="btn btn-primary"
+                    onclick="return confirm('Estas seguro que quieres borrar? {{$event->name}}  {{$event->id}}')">
+                    <img
+                        src="htps://www.ordenencasa.shop/wp-content/uploads/2020/05/papelera-redonda-en-madera-de-bambu.jpg" />
+                </button>
+                <a href="{{ route('editEvent',['id' => $event->id]) }}">✏️</a>
+            </form>
         </div>
-        @endsection
+
+    </div>
+    @endforeach
+</div>
+@endsection
